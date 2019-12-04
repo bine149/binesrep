@@ -1,0 +1,113 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+        /**********************************************GET Methode*****************************************************/
+        /*
+        var settings = {
+
+            "async": true,
+            "crossDomain": true,
+            "url": "https://itkongress-06fd.restdb.io/rest/vortraege",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": "5de58b7a4658275ac9dc21e8",
+                "cache-control": "no-cache"
+            }
+        }
+
+        $.ajax(settings).done(function (response) {
+
+            var myJSON = JSON.stringify(response);
+            var test = JSON.stringify(response[1].Beschreibung);
+            console.log(test);
+            $("div").append(test.substring(1,8));
+        });
+
+        */
+        /*****************************************POST Methode*********************************************************/
+
+        function auslesen() {
+            var name = document.getElementById("name").value;
+            var branche = document.getElementById("branche").value;
+            var jsondata = {
+                "Firmenname": name,
+                "Branche":branche
+            };
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://itkongress-06fd.restdb.io/rest/firmenprofile",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json",
+                    "x-apikey": "5de58b7a4658275ac9dc21e8",
+                    "cache-control": "no-cache"
+                },
+                "processData": false,
+                "data": JSON.stringify(jsondata)
+            }
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        }
+
+        /*****************************************Log in*********************************************************/
+        
+        function checkcredentials() {
+
+            var name2 = document.getElementById("name").value;
+            var branche = document.getElementById("branche").value;
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://itkongress-06fd.restdb.io/rest/app-user",
+                "method": "GET",
+                "headers": {
+                    "content-type": "application/json",
+                    "x-apikey": "5de58b7a4658275ac9dc21e8",
+                    "cache-control": "no-cache"
+                }
+            };
+
+            $.ajax(settings).done(function (response) {
+
+                var laenge = response.length;
+                console.log(laenge);
+
+                for(i=0;i<laenge;i++){
+                    if(response[i].username == name2){
+                        console.log("user ist vorhanden");
+                    } else {
+                        console.log("user ist nicht vorhanden");
+                    }
+
+                        console.log("Schluessel: " + response[i].username + " mit Wert: " + response[i].password);
+                }
+
+            });
+
+        }
+
+    </script>
+</head>
+<body>
+
+<div></div>
+
+<div>Firmenname:<input type="text" id="name"></input></div>
+<div>Branche: <input type="text" id="branche"></input></div>
+
+<button onclick="auslesen()">Upload</button>
+<button onclick="checkcredentials()">Check</button>
+</body>
+</html>
+
